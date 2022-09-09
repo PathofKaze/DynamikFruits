@@ -1,0 +1,17 @@
+<div class="box-it">
+    <p><strong>List of Orders</strong></p>
+    <p>Click on submitted orders to edit them</p>
+    <div *ngIf="ordersDB == undefined">
+    <p><strong>You have no submitted orders</strong></p>
+    </div>
+    <table>
+    <tr>
+        <th>Order ID</th>
+        <th>Name</th>
+    </tr>
+    <tr *ngFor="let o of ordersDB | keyvalue; let i = index;" (click)="edit(o.key)">
+        <td>[<code>{{ o.key }}</code>]</td>  
+        <td><span>{{ o.value.name }}</span></td>
+    </tr>
+    </table>
+</div>

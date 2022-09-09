@@ -1,0 +1,89 @@
+<div class="box-it">
+    <p><strong>Purchase Order Form</strong></p>
+    <form [formGroup]="orderForm" (ngSubmit)="processOrder()">
+      <table>
+      <tr>
+            <td>Name: </td>
+            <td><input type="text" id="name" placeholder="Your Name"
+              formControlName="name"></td>
+        </tr>
+        <tr>
+            <td>Mobile: </td>
+            <td><input type="tel" id="mobile"  placeholder="Your Mobile"
+              formControlName="mobile"></td>
+        </tr>
+        <tr>
+          <button *ngIf="lineItemsArray.controls.length > 0" type="submit" [disabled]="orderForm.invalid">Save</button>
+          <button *ngIf="lineItemsArray.controls.length == 0" type="button" (click)="startItem()">Start Order</button>
+        </tr>
+      </table>
+
+      <div *ngIf="lineItemsArray.controls.length == 0">
+        <table>
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th><button type="button" style="font-size: 15.5px;" disabled>+</button></th>
+              </tr>
+            </thead>
+            <tbody>
+              <p><strong>You have not started an order</strong></p>
+            </tbody>
+          </table>
+        </div>
+
+      <div *ngIf="lineItemsArray.controls.length >0">
+        <table>
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>
+                  <button type="button" (click)="addItem()">+</button>
+                </th>
+              </tr>
+            </thead>
+            <tbody formArrayName="lineItems">
+                <tr *ngFor="let li of lineItemsArray.controls; let idx = index;" [formGroup]="li">
+                <td>
+                  <select formControlName="item">
+                    <option value="apple">Apple, $1.49</option>
+                    <option value="bananas">Bananas, $2.39</option>
+                    <option value="durian">Durian, $7.99</option>
+                    <option value="kiwi">Kiwi, $3.99</option>
+                    <option value="mango">Mango, $4.29</option>
+                    <option value="lemon">Lemon, $1.99</option>
+                    <option value="plum">Plum, $0.99</option>
+                    <option value="peach">Peach, $5.99</option>
+                    <option value="orange">Orange, $1.49</option>
+                    <option value="grape">Grape, $0.49</option>
+                  </select>
+                </td>
+                <td>
+                  <select formControlName="quantity">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                  </select>
+                </td>
+                <td>
+                  <button type="button" (click)="removeItem(idx)">X</button>
+                </td>
+              </tr>
+              <tr>
+                <td><p>Total Price:$ {{ total }}</p></td>
+                <td><button type="button" (click)="checktotal()">Check Total</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </form>
+</div>
